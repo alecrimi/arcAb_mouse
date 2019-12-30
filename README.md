@@ -8,7 +8,10 @@ The configuration for the registration is given into the 2 files: affine.txt and
 
 Being the regions of the atlas grouped hierarchically, we follow the hierarchy summarized into the file region_columns.xls
 
+main_script.m should be used to call the function and pass parameters.
+
 plaque_region_count.m is the script practically performing the threshold and counting the connected elements in specific rois.
+It uses adaptive threshold in 3D which is implemented in Matlab since version 2018b
 
 saveastiff.m is a utility to save large TIF files for visual inspection (e.g. the plaque segentation). The script was originally developed by YoonOh Tak https://ch.mathworks.com/matlabcentral/fileexchange/35684-multipage-tiff-stack
 

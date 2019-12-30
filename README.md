@@ -13,4 +13,5 @@ plaque_region_count.m is the script practically performing the threshold and cou
 saveastiff.m is a utility to save large TIF files for visual inspection (e.g. the plaque segentation). The script was originally developed by YoonOh Tak https://ch.mathworks.com/matlabcentral/fileexchange/35684-multipage-tiff-stack
 
 left_results.csv and right_results.csv summarize the plaque count.
-The used images are available on Figshares at the URL: 
+
+The used images (including the intermediate stesp) are available downsampled on Figshares at the URL: 

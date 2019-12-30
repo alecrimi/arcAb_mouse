@@ -1,4 +1,4 @@
-function plaque_region_count(fname,fname_atlas_lables)
+function plaque_region_count(fname,fname_atlas_lables,flag_erosion, conservative_adpthresh, remove_large_areas)
 
 %Parameters
 %n_substacks = 500;
@@ -13,7 +13,8 @@ grouped_region(isnan(grouped_region))=0;
 %res = zeros(floor(num_images/n_substacks),roi);
 res = zeros(1,roi);
 se = offsetstrel('ball',4,4); %Erosion element in case of need to separate the ROIs
- 
+max_area = 150; %Plaques can be of a maximum number of pixels otherwise they are artefacts
+
 %  Load data
 temp = imread(fname);
 [r,c] = size(temp);
@@ -51,8 +52,19 @@ end
     end
     %}
     %reg_atlas = reg_atlas - 32768; %Adjust from imagej values
+    % Derek Bradley & Gerhard Roth (2005) Adaptive Thresholding
+    % Its more conservative way (less foreground) can be set by a parameter or by forcing to use the max
     T = adaptthresh(volume);       
-    bw=imbinarize(volume,max(max(max(T))));
+    if (conservative_adpthresh)
+       bw=imbinarize(volume,max(max(max(T))));
+    else
+       bw=imbinarize(volume, T );
+    end
+    
+    if(remove_large_areas)
+      BW2 = bwareaopen(bw, max_area);
+      bw = bw - BW2;
+    end
     saveastiff(uint8(bw), [ 'segmentation.tif']);
     
     %Create mask according to region

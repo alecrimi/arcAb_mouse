@@ -1,6 +1,6 @@
 Thi repo contains the matlab script to generate some of the results reported in Ni et al.
 
-Initially the Allen Mouse Brain Atlas https://www.nature.com/articles/nature13186 is used to register lables to the brain volumes and then plaques are counted according to specific regions of the atlas.
+Initially the Allen Mouse Brain Atlas https://www.nature.com/articles/nature05453 is used to register lables to the brain volumes and then plaques are counted according to specific regions of the atlas.
 The process is run separately per hemisphere. Initially the reference volume of the atlas is registered to the acquired volume in a 2-step process. Then the transformation used to obtain the registration is applied to the lables reference volume.
 
 The registration is performed by using the tool Elastix http://elastix.isi.uu.nl/

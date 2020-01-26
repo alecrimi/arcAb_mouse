@@ -11,7 +11,8 @@ grouped_region = xlsread('regions_columns.xls');
 [ sub, roi ] = size(grouped_region);
 grouped_region(isnan(grouped_region))=0;
 %res = zeros(floor(num_images/n_substacks),roi);
-res = zeros(1,roi);
+res = zeros(1,roi); %number of plaques per region (final result)
+ROI_vol = zeros(1,roi); % how big is each region (in voxels/pixels)
 se = offsetstrel('ball',4,4); %Erosion element in case of need to separate the ROIs
 max_area = 150; %Plaques can be of a maximum number of pixels otherwise they are artefacts
 
@@ -54,6 +55,7 @@ end
     %reg_atlas = reg_atlas - 32768; %Adjust from imagej values
     % Derek Bradley & Gerhard Roth (2005) Adaptive Thresholding
     % Its more conservative way (less foreground) can be set by a parameter or by forcing to use the max
+    %Segment according to global threshold automatically
     T = adaptthresh(volume);       
     if (conservative_adpthresh)
        bw=imbinarize(volume,max(max(max(T))));
@@ -90,9 +92,9 @@ end
     %    end
         
         layer = mask.* uint16(bw); 
-        %Segment according to global threshold automatically
-       
+        
         res(1,ll) = max(max(max(bwlabeln(layer))));
+        ROI_vol(1,ll) = sum(sum(sum(mask)));
     end
 %end
 %fclose(fp); 
